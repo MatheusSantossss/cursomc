@@ -1,10 +1,12 @@
 package com.nelioalves.cursomc.resources;
 
 import com.nelioalves.cursomc.domain.Categoria;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.nelioalves.cursomc.repositories.CategoriaRepository;
+import com.nelioalves.cursomc.services.CategoriaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +14,23 @@ import java.util.List;
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Categoria> hello(){
-        Categoria cat1 = new Categoria(1L, "Informática");
-        Categoria cat2 = new Categoria(2L, "Escritório");
-        List<Categoria> categorias = new ArrayList<>();
-        categorias.add(cat1);
-        categorias.add(cat2);
+    @Autowired
+    CategoriaService categoriaService;
+
+    @RequestMapping(method = RequestMethod.POST)
+    public List<Categoria> cadastrarCategorias(@RequestBody List<Categoria> categorias){
+        categoriaService.cadastrarCategorias(categorias);
         return categorias;
+    }
+
+    @GetMapping(path = "/listar-categorias")
+    public List<Categoria> listarCategorias(){
+        return categoriaService.listarCategorias();
+    }
+
+    @GetMapping(path = "/{id}")
+    public Categoria buscarCategoriaPorId(@PathVariable Long id){
+        return categoriaService.buscarCategoriaPorId(id);
     }
 
 }
