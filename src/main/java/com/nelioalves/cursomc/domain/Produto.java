@@ -1,10 +1,9 @@
 package com.nelioalves.cursomc.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +11,7 @@ public class Produto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -20,18 +20,18 @@ public class Produto implements Serializable {
     @Column
     private Double preco;
 
-    @ManyToOne()
-    private Categoria categoria;
+    @ManyToMany()
+    @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    private List<Categoria> categorias = new ArrayList<>();
 
     public Produto(){
 
     }
 
-    public Produto(Long id, String nome, Double preco, Categoria categoria){
+    public Produto(Long id, String nome, Double preco){
         this.id = id;
         this.nome = nome;
         this.preco = preco;
-        this.categoria = categoria;
     }
 
     public Long getId() {
@@ -58,12 +58,12 @@ public class Produto implements Serializable {
         this.preco = preco;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public List<Categoria> getCategorias() {
+        return categorias;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 
     @Override

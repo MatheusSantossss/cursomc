@@ -30,7 +30,7 @@ public class ProdutoResource {
         return null;
     }
 
-    @PostMapping
+    @PostMapping(path = "/lista-produtos")
     public List<Produto> cadastrarListaProdutos(@RequestBody List<Produto> produtos){
         return null;
     }
