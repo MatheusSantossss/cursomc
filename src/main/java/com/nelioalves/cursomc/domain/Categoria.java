@@ -2,6 +2,7 @@ package com.nelioalves.cursomc.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +14,9 @@ public class Categoria implements Serializable {
     private Long id;
     @Column(name = "nome")
     private String nome;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Produto> produtos;
 
     public Categoria(){
 

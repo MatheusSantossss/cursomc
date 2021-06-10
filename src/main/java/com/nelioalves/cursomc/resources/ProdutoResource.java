@@ -1,6 +1,8 @@
 package com.nelioalves.cursomc.resources;
 
 import com.nelioalves.cursomc.domain.Produto;
+import com.nelioalves.cursomc.services.ProdutoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/produtos")
 public class ProdutoResource {
+
+    @Autowired
+    ProdutoService produtoService;
 
     @GetMapping
     public List<Produto> listarProdutos(){
